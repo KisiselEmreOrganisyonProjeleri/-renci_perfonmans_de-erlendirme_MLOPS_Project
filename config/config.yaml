@@ -5,3 +5,8 @@ data_ingestion:
   source_URL: https://www.kaggle.com/api/v1/datasets/download/bhavikjikadara/student-study-performance
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion
+
+data_transform:
+  root_dir: artifacts/data_transform
+  data_path: artifacts/data_ingestion/study_performance.csv
+  prerocessor_file: artifacts/data_transform/preprocessor.pkl

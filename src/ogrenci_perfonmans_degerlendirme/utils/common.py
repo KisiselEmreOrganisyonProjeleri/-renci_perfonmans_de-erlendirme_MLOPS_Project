@@ -3,6 +3,7 @@ import yaml
 from ensure import ensure_annotations
 from box import ConfigBox
 from pathlib import Path
+import pickle
 
 @ensure_annotations
 def read_yaml(path_to_yaml: Path) -> ConfigBox:
@@ -14,7 +15,7 @@ def read_yaml(path_to_yaml: Path) -> ConfigBox:
     try:
         with open(path_to_yaml) as yaml_file:
             content = yaml.safe_load(yaml_file)
-            return ConfigBox(yaml_file)
+            return ConfigBox(content)
     except BoxValueError:
         raise ValueError('yaml dosyasının içi boş')
     except Exception as e:
@@ -32,3 +33,15 @@ def get_size(path: Path) -> str:
     'KB olarak dosya boyutunu döndürür'
     size_in_kb = round(os.path.getsize(path)/1024)
     return f"{size_in_kb}kb"
+
+def save_object(file_path:Path, obj):
+    try:
+        dir_path = os.path.dirname(file_path)
+
+        os.makedirs(dir_path, exist_ok=True)
+
+        with open(file_path, "wb") as file_obj:
+            pickle.dump(obj, file_obj)
+
+    except Exception as e:
+        raise e
